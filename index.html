@@ -168,7 +168,12 @@
        ============================================== */
     *, *::before, *::after { box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
 
     body {
       font-family: var(--fuente-cuerpo);
@@ -387,7 +392,9 @@
     .heroe-badge {
       display: inline-flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 0.5rem;
+      max-width: 100%;
       background: rgba(200, 151, 58, 0.18);
       border: 1px solid rgba(200, 151, 58, 0.55);
       color: var(--dorado-claro);
@@ -948,12 +955,17 @@
     .agente-contacto-linea {
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 0.9rem;
       margin-bottom: 1rem;
       font-size: 0.95rem;
     }
     .agente-contacto-linea a { color: var(--blanco); }
     .agente-contacto-linea a:hover { color: var(--dorado-claro); }
+    .agente-contacto-linea a {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
     .agente-icono-circulo {
       width: 40px;
       height: 40px;
@@ -1101,8 +1113,16 @@
 
     @media (max-width: 576px) {
       .heroe-titulo { font-size: 2.3rem; }
+      .heroe-badge {
+        font-size: 0.64rem;
+        letter-spacing: 0.1em;
+      }
       .tarjeta-agente { padding: 1.875rem 1.375rem; }
       .caja-formulario { padding: 1.75rem 1.125rem; }
+      .agente-contacto-linea {
+        font-size: 0.88rem;
+        gap: 0.6rem;
+      }
     }
 
     @media print {
