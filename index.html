@@ -2204,12 +2204,26 @@
 
   <script>
     /* =============================================
-       Navbar compacta al hacer scroll
+       Navbar compacta: scroll + menú móvil abierto
        ============================================= */
     const nav = document.getElementById('navbarPrincipal');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('compacta', window.scrollY > 70);
-    }, { passive: true });
+    const menuCol = document.getElementById('menuNav');
+    const enMovil = () => window.matchMedia('(max-width: 991.98px)').matches;
+
+    const actualizarNavbarCompacta = () => {
+      const menuAbiertoEnMovil = enMovil() && menuCol?.classList.contains('show');
+      nav.classList.toggle('compacta', window.scrollY > 70 || menuAbiertoEnMovil);
+    };
+
+    window.addEventListener('scroll', actualizarNavbarCompacta, { passive: true });
+    window.addEventListener('resize', actualizarNavbarCompacta);
+
+    if (menuCol) {
+      menuCol.addEventListener('shown.bs.collapse', actualizarNavbarCompacta);
+      menuCol.addEventListener('hidden.bs.collapse', actualizarNavbarCompacta);
+    }
+
+    actualizarNavbarCompacta();
 
     /* =============================================
        Animaciones fade-up con Intersection Observer
@@ -2236,7 +2250,6 @@
         const margen = 76;
         const posicion = destino.getBoundingClientRect().top + window.pageYOffset - margen;
         window.scrollTo({ top: posicion, behavior: 'smooth' });
-        const menuCol = document.getElementById('menuNav');
         if (menuCol?.classList.contains('show')) {
           bootstrap.Collapse.getInstance(menuCol)?.hide();
         }
