@@ -1472,7 +1472,7 @@
 
           <div class="carousel-item carousel-item-galeria">
             <img
-              src="https://www.hauslife.es/wp-content/uploads/2025/10/Ibero-Mijas-Cala-Cam-04-Campo-de-golf-scaled.jpg"
+              src="https://www.hauslife.es/wp-content/uploads/2025/08/Ibero-Mijas-Cala-Cam-02-Piscina-Playa-2048x1152.jpg"
               class="d-block w-100"
               alt="Zona comunitaria del complejo residencial con piscinas exteriores y jardines mediterráneos"
               loading="lazy"
@@ -1485,7 +1485,7 @@
 
           <div class="carousel-item carousel-item-galeria">
             <img
-              src="https://www.hauslife.es/wp-content/uploads/2025/10/Ibero-Mijas-Cala-Cam-04-Campo-de-golf-scaled.jpg"
+              src="https://www.hauslife.es/wp-content/uploads/2025/08/Ibero-Mijas-Cala-Cam-03-Edif-Lateral-2048x1540.jpg"
               class="d-block w-100"
               alt="Vistas panorámicas al mar Mediterráneo desde las terrazas de los apartamentos de obra nueva"
               loading="lazy"
@@ -1493,6 +1493,19 @@
             >
             <div class="galeria-leyenda">
               <i class="bi bi-camera-fill me-2"></i>Vistas Panorámicas al Mediterráneo
+            </div>
+          </div>
+
+          <div class="carousel-item carousel-item-galeria">
+            <img
+              src="https://www.hauslife.es/wp-content/uploads/2025/08/Ibero-Mijas-Cala-Cam-01-Piscina-2048x1152.jpg"
+              class="d-block w-100"
+              alt="Zona de piscina exterior rodeada de jardines mediterráneos en la urbanización privada de los apartamentos Ibero Mijas Cala"
+              loading="lazy"
+              style="filter:brightness(1.05) saturate(1.18) hue-rotate(4deg)"
+            >
+            <div class="galeria-leyenda">
+              <i class="bi bi-camera-fill me-2"></i>Zona de Piscina Exterior
             </div>
           </div>
 
@@ -1511,6 +1524,7 @@
           <button type="button" data-bs-target="#carouselGaleria" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Vista 1" style="background:var(--dorado);width:30px;height:4px;border-radius:2px"></button>
           <button type="button" data-bs-target="#carouselGaleria" data-bs-slide-to="1" aria-label="Vista 2" style="background:rgba(200,151,58,0.4);width:30px;height:4px;border-radius:2px"></button>
           <button type="button" data-bs-target="#carouselGaleria" data-bs-slide-to="2" aria-label="Vista 3" style="background:rgba(200,151,58,0.4);width:30px;height:4px;border-radius:2px"></button>
+          <button type="button" data-bs-target="#carouselGaleria" data-bs-slide-to="3" aria-label="Vista 4" style="background:rgba(200,151,58,0.4);width:30px;height:4px;border-radius:2px"></button>
         </div>
       </div>
 
@@ -2275,8 +2289,37 @@
        ============================================= */
     const carousel = document.getElementById('carouselGaleria');
     if (carousel) {
+      const carouselInner = carousel.querySelector('.carousel-inner');
+      const indicatorsContainer = carousel.querySelector('.carousel-indicators');
+      const slides = carouselInner?.querySelectorAll('.carousel-item') ?? [];
+
+      if (indicatorsContainer && slides.length > 0) {
+        indicatorsContainer.innerHTML = '';
+        slides.forEach((_, i) => {
+          const indicator = document.createElement('button');
+          indicator.type = 'button';
+          indicator.setAttribute('data-bs-target', '#carouselGaleria');
+          indicator.setAttribute('data-bs-slide-to', String(i));
+          indicator.setAttribute('aria-label', `Vista ${i + 1}`);
+          indicator.style.height = '4px';
+          indicator.style.borderRadius = '2px';
+
+          if (i === 0) {
+            indicator.classList.add('active');
+            indicator.setAttribute('aria-current', 'true');
+            indicator.style.background = 'var(--dorado)';
+            indicator.style.width = '44px';
+          } else {
+            indicator.style.background = 'rgba(200,151,58,0.4)';
+            indicator.style.width = '30px';
+          }
+
+          indicatorsContainer.appendChild(indicator);
+        });
+      }
+
       carousel.addEventListener('slid.bs.carousel', e => {
-        document.querySelectorAll('.carousel-indicators button').forEach((btn, i) => {
+        carousel.querySelectorAll('.carousel-indicators button').forEach((btn, i) => {
           const activo = i === e.to;
           btn.style.background = activo
             ? 'var(--dorado)'
